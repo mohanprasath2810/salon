@@ -1,0 +1,15 @@
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Prisma generated
+salon-backend/node_modules/
+salon-web/node_modules/
