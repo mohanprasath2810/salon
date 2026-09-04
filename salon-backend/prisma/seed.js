@@ -3,7 +3,7 @@
 // their own services, staff, and working hours — enough to properly
 // test search/discovery, not just a single salon.
 const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
