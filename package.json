@@ -1,6 +1,18 @@
 {
+  "name": "salon-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"backend,frontend\" -c \"blue,green\" \"npm run dev --prefix salon-backend\" \"npm run dev --prefix salon-web\"",
+    "dev:backend": "npm run dev --prefix salon-backend",
+    "dev:frontend": "npm run dev --prefix salon-web",
+    "install:all": "npm install && npm install --prefix salon-backend && npm install --prefix salon-web"
+  },
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^1.12.98"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
   }
 }
