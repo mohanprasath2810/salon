@@ -51,7 +51,7 @@ async function createStaff(req, res, next) {
         data: { name, email, phone, passwordHash, role: 'STAFF' },
       });
 
-      return tx.staff.create({
+      const newStaff = await tx.staff.create({
         data: {
           userId: user.id,
           salonId: req.params.salonId,
@@ -60,6 +60,16 @@ async function createStaff(req, res, next) {
         },
         include: { user: { select: { id: true, name: true, email: true } } },
       });
+
+      // Default working hours: Sun-Thu, Sat (09:00 - 18:00). Friday is holiday.
+      const defaultHours = [];
+      for (let day = 0; day <= 6; day++) {
+        if (day === 5) continue; // Friday holiday
+        defaultHours.push({ staffId: newStaff.id, dayOfWeek: day, startTime: '09:00', endTime: '18:00' });
+      }
+      await tx.workingHour.createMany({ data: defaultHours });
+
+      return newStaff;
     });
 
     res.status(201).json({ staff });

@@ -80,9 +80,10 @@ async function createSalonWithData({
     },
   });
 
-  // Mon-Fri, 9am-6pm. Clear first so re-running seed doesn't duplicate rows.
+  // Open 6 days a week (Sun-Thu, Sat), 9am-6pm. Friday (day 5) is the weekly holiday.
   await prisma.workingHour.deleteMany({ where: { staffId: staff.id } });
-  for (let day = 1; day <= 5; day++) {
+  for (let day = 0; day <= 6; day++) {
+    if (day === 5) continue; // Friday is holiday
     await prisma.workingHour.create({
       data: { staffId: staff.id, dayOfWeek: day, startTime: '09:00', endTime: '18:00' },
     });

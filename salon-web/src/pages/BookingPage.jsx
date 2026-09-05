@@ -216,7 +216,11 @@ export default function BookingPage() {
               </div>
             ) : slots.length === 0 ? (
               <div style={styles.noSlots}>
-                <p>No open slots for this date. Try another day.</p>
+                {new Date(date + 'T00:00:00').getDay() === 5 ? (
+                  <p>🌿 <strong>Friday is a weekly holiday.</strong> Please choose Saturday, Sunday, or another weekday.</p>
+                ) : (
+                  <p>No open slots for this date. Try another day.</p>
+                )}
               </div>
             ) : (
               <div style={styles.slotGrid} className="fade-in-stagger">
