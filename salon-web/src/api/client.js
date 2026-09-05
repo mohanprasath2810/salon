@@ -3,7 +3,10 @@
 // of writing fetch() calls everywhere — so if the API URL or auth
 // header logic ever changes, we only update it in one place.
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Format and normalize the backend API URL
+let rawBase = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').trim();
+rawBase = rawBase.replace(/\/+$/, ''); // Remove trailing slashes
+const API_BASE = rawBase.endsWith('/api') ? rawBase : `${rawBase}/api`;
 
 function getToken() {
   return localStorage.getItem('token');
